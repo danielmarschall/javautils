@@ -1,4 +1,4 @@
-package com.iamcal.rfc3696;
+package de.viathinksoft.utils.mail.syntaxchecker;
 
 import static org.junit.Assert.*;
 
@@ -16,7 +16,9 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-public class RFC3696EmailParserTest {
+import de.viathinksoft.utils.mail.EMailAddress;
+
+public class MailSyntaxCheckerTest {
 	
 	static int errorCount;
 	
@@ -67,7 +69,7 @@ public class RFC3696EmailParserTest {
 				cont = ((Node) fstNm.item(0)).getNodeValue();
 				id = cont;
 
-				boolean actual = RFC3696EmailParser.isValidEmailAddress(address);
+				boolean actual = MailSyntaxChecker.isMailValid(address);
 
 				// assertEquals(expected, actual);
 				if (expected != actual) {
@@ -86,12 +88,22 @@ public class RFC3696EmailParserTest {
 
 		// First: Null-Pointer Test 
 		
-		RFC3696EmailParser.isValidEmailAddress(null);
+		try {
+			MailSyntaxChecker.isMailValid((String)null);
+			fail();
+		} catch (NullPointerException e) {
+		}
+
+		try {
+			MailSyntaxChecker.isMailValid((EMailAddress)null);
+			fail();
+		} catch (NullPointerException e) {
+		}
 		
 		// Now check the XML testcases
 		
 		checkXML("test/eMailTests/SayersTests.xml");
-		checkXML("test/eMailTests/ExperimentalTests.xml");
+		checkXML("test/eMailTests/emailExperimentalTests.xml");
 
 		if (errorCount > 0) {
 			System.err.println("==> " + errorCount + " ERRORS OCCOURED! <==");

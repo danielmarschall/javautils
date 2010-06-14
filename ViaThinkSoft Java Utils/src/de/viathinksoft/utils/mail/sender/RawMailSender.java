@@ -14,8 +14,6 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import de.viathinksoft.utils.mail.InvalidMailAddressException;
-
 abstract public class RawMailSender {
 
 	private static final String TRANSPORT_PROTOCOL = "smtp";
@@ -40,8 +38,7 @@ abstract public class RawMailSender {
 		return mailFrom;
 	}
 
-	public void setMailFrom(String mailFrom) throws InvalidMailAddressException {
-		if (mailFrom == null) throw new InvalidMailAddressException();
+	public void setMailFrom(String mailFrom) {
 		this.mailFrom = mailFrom.trim();
 	}
 
@@ -49,8 +46,7 @@ abstract public class RawMailSender {
 		return recipient;
 	}
 
-	public void setRecipient(String recipient) throws InvalidMailAddressException {
-		if (recipient == null) throw new InvalidMailAddressException();
+	public void setRecipient(String recipient) {
 		this.recipient = recipient.trim();
 	}
 

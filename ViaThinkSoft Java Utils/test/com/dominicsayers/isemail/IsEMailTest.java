@@ -91,8 +91,8 @@ public class IsEMailTest {
 		
 		// Now check the XML testcases
 		
-		checkXML("test/emailSayersTests.xml");
-		checkXML("test/emailExperimentalTests.xml");
+		checkXML("test/eMailTests/SayersTests.xml");
+		checkXML("test/eMailTests/ExperimentalTests.xml");
 
 		if (errorCount > 0) {
 			System.err.println("==> " + errorCount + " ERRORS OCCOURED! <==");

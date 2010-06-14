@@ -11,13 +11,13 @@ import javax.mail.internet.AddressException;
 import org.junit.Test;
 
 import de.viathinksoft.utils.mail.EMailAddress;
-import de.viathinksoft.utils.mail.InvalidMailAddressException;
 import de.viathinksoft.utils.mail.sender.PlainTextMailSender;
+import eMailTests.TestConfiguration;
 
 public class RawMailSenderPlainTextTest {
 	@Test
 	public void testPostMailNullPointer() throws MessagingException,
-			AuthentificateDataIncompleteException, InvalidMailAddressException {
+			AuthentificateDataIncompleteException {
 		PlainTextMailSender mailsender = new PlainTextMailSender();
 
 		try {
@@ -42,7 +42,7 @@ public class RawMailSenderPlainTextTest {
 		try {
 			mailsender.setRecipient((EMailAddress)null);
 			fail();
-		} catch (InvalidMailAddressException e1) {
+		} catch (NullPointerException e1) {
 		}
 
 		try {
@@ -67,7 +67,7 @@ public class RawMailSenderPlainTextTest {
 		try {
 			mailsender.setRecipient((String)null);
 			fail();
-		} catch (InvalidMailAddressException e1) {
+		} catch (NullPointerException e1) {
 		}
 
 		try {
@@ -136,7 +136,7 @@ public class RawMailSenderPlainTextTest {
 		try {
 			mailsender.setMailFrom((EMailAddress)null);
 			fail();
-		} catch (InvalidMailAddressException e1) {
+		} catch (NullPointerException e1) {
 		}
 		mailsender.setSubject(null);
 		mailsender.setMessage(null);
@@ -153,7 +153,7 @@ public class RawMailSenderPlainTextTest {
 		try {
 			mailsender.setMailFrom((String)null);
 			fail();
-		} catch (InvalidMailAddressException e1) {
+		} catch (NullPointerException e1) {
 		}
 
 		try {
@@ -174,7 +174,7 @@ public class RawMailSenderPlainTextTest {
 
 	@Test
 	public void testPostMailBlank()
-			throws AuthentificateDataIncompleteException, InvalidMailAddressException {
+			throws AuthentificateDataIncompleteException {
 		PlainTextMailSender mailsender = new PlainTextMailSender();
 
 		mailsender.setRecipient(TestConfiguration.getSpamAddress());
@@ -200,7 +200,7 @@ public class RawMailSenderPlainTextTest {
 
 	@Test
 	public void testPostMailWithData() throws MessagingException,
-			AuthentificateDataIncompleteException, InvalidMailAddressException
+			AuthentificateDataIncompleteException
 			{
 		PlainTextMailSender mailsender = new PlainTextMailSender();
 
@@ -221,7 +221,7 @@ public class RawMailSenderPlainTextTest {
 
 	@Test
 	public void testPostMailWithDataAndOrigin() throws MessagingException,
-			AuthentificateDataIncompleteException, InvalidMailAddressException {
+			AuthentificateDataIncompleteException {
 		PlainTextMailSender mailsender = new PlainTextMailSender();
 
 		mailsender.setSmtpHost(TestConfiguration.getSmtpHost());
@@ -243,7 +243,7 @@ public class RawMailSenderPlainTextTest {
 
 	@Test
 	public void testPostMailWithDataAndOriginAndSmtpAuthIncompleteUserAndPwd()
-			throws MessagingException, InvalidMailAddressException {
+			throws MessagingException {
 		PlainTextMailSender mailsender = new PlainTextMailSender();
 
 		mailsender.setSmtpHost(TestConfiguration.getSmtpHost());
@@ -269,7 +269,7 @@ public class RawMailSenderPlainTextTest {
 
 	@Test
 	public void testPostMailWithDataAndOriginAndSmtpAuthIncompleteUser()
-			throws MessagingException, InvalidMailAddressException {
+			throws MessagingException {
 		PlainTextMailSender mailsender = new PlainTextMailSender();
 
 		mailsender.setSmtpHost(TestConfiguration.getSmtpHost());
@@ -295,7 +295,7 @@ public class RawMailSenderPlainTextTest {
 
 	@Test
 	public void testPostMailWithDataAndOriginAndSmtpAuthIncompletePwd()
-			throws MessagingException, InvalidMailAddressException {
+			throws MessagingException {
 		PlainTextMailSender mailsender = new PlainTextMailSender();
 
 		mailsender.setSmtpHost(TestConfiguration.getSmtpHost());
@@ -321,7 +321,7 @@ public class RawMailSenderPlainTextTest {
 
 	@Test
 	public void testPostMailWithDataAndOriginAndSmtpAuthComplete()
-			throws MessagingException, AuthentificateDataIncompleteException, InvalidMailAddressException {
+			throws MessagingException, AuthentificateDataIncompleteException {
 		PlainTextMailSender mailsender = new PlainTextMailSender();
 
 		mailsender.setSmtpHost(TestConfiguration.getSmtpHost());

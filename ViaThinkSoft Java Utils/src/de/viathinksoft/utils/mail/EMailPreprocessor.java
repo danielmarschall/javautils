@@ -12,7 +12,7 @@ package de.viathinksoft.utils.mail;
  */
 public class EMailPreprocessor {
 	
-	public static String preprocess(String eMailAddress) throws InvalidMailAddressException {
+	public static String preprocess(String eMailAddress) {
 		EMailAddress email = new EMailAddress(eMailAddress);
 		
 		return email.getMailAddressPunycodedDomain();

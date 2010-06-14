@@ -12,95 +12,108 @@ public class EMailAddressTest {
 	private static final String ExampleUnicode = IDN.toUnicode(ExamplePunycode);
 	
 	@Test
-	public void testAddressParsing() throws InvalidMailAddressException {
+	public void testAddressParsing() {
 		try {
 			new EMailAddress(null);
 			fail();
-		} catch (InvalidMailAddressException e) {
-		}
-		
-		try {
-			new EMailAddress("");
-			fail();
-		} catch (InvalidMailAddressException e) {
-		}
-		
-		try {
-			new EMailAddress("bla");
-			fail();
-		} catch (InvalidMailAddressException e) {
+		} catch (NullPointerException e) {
 		}
 		
 		EMailAddress a;
 		
-//		a = new EMailAddress("@");
-//		assertEquals(a.getLocalPartUnicode(), "");
-//		// assertEquals(a.getLocalPartASCII(), "");
-//		assertEquals(a.getDomainPartUnicode(), "");
-//		assertEquals(a.getDomainPartASCII(), "");
-//		assertEquals(a.getTldUnicode(), "");
-//		assertEquals(a.getTldASCII(), "");
-//		assertEquals(a.getTldUnicode(), "");
-//		assertEquals(a.getMailAddressASCII(), "");
+		a = new EMailAddress("");
+		assertEquals("", a.getLocalPart());
+		// assertEquals("", a.getLocalPartASCII());
+		assertEquals("", a.getDomainPartUnicode());
+		assertEquals("", a.getDomainPartPunycode());
+		assertEquals("", a.getTldUnicode());
+		assertEquals("", a.getTldPunycode());
+		assertEquals("", a.toString());
+		assertEquals("", a.getMailAddressUnicode());
+		assertEquals("", a.getMailAddressPunycodedDomain());
+
+		a = new EMailAddress("bla");
+		assertEquals("bla", a.getLocalPart());
+		// assertEquals("", a.getLocalPartASCII());
+		assertEquals("", a.getDomainPartUnicode());
+		assertEquals("", a.getDomainPartPunycode());
+		assertEquals("", a.getTldUnicode());
+		assertEquals("", a.getTldPunycode());
+		assertEquals("bla", a.toString());
+		assertEquals("bla", a.getMailAddressUnicode());
+		assertEquals("bla", a.getMailAddressPunycodedDomain());
 		
-		try {
-			new EMailAddress("@");
-			// Es wird InvalidMailAddressException anstelle von
-			// local="" und domain="" ausgegeben,
-			// weil .split nicht so wie .explode reagiert
-			fail();
-		} catch (InvalidMailAddressException e) {
-		}
+		a = new EMailAddress(ExampleUnicode);
+		assertEquals(ExampleUnicode, a.getLocalPart());
+		// assertEquals("", a.getLocalPartASCII());
+		assertEquals("", a.getDomainPartUnicode());
+		assertEquals("", a.getDomainPartPunycode());
+		assertEquals("", a.getTldUnicode());
+		assertEquals("", a.getTldPunycode());
+		assertEquals(ExampleUnicode, a.toString());
+		assertEquals(ExampleUnicode, a.getMailAddressUnicode());
+		assertEquals(ExampleUnicode, a.getMailAddressPunycodedDomain());
+
+		a = new EMailAddress("@");
+		assertEquals("", a.getLocalPart());
+		// assertEquals("", a.getLocalPartASCII());
+		assertEquals("", a.getDomainPartUnicode());
+		assertEquals("", a.getDomainPartPunycode());
+		assertEquals("", a.getTldUnicode());
+		assertEquals("", a.getTldPunycode());
+		assertEquals("", a.toString());
+		assertEquals("", a.getMailAddressUnicode());
+		assertEquals("", a.getMailAddressPunycodedDomain());
 
 		a = new EMailAddress("local@domain");
-		assertEquals(a.getLocalPart(), "local");
-		// assertEquals(a.getLocalPartASCII(), "local");
-		assertEquals(a.getDomainPartUnicode(), "domain");
-		assertEquals(a.getDomainPartPunycode(), "domain");
-		assertEquals(a.getTldUnicode(), "");
-		assertEquals(a.getTldPunycode(), "");
-		assertEquals(a.toString(), "local@domain");
-		assertEquals(a.getMailAddressUnicode(), "local@domain");
-		assertEquals(a.getMailAddressPunycodedDomain(), "local@domain");
+		assertEquals("local", a.getLocalPart());
+		// assertEquals("local", a.getLocalPartASCII());
+		assertEquals("domain", a.getDomainPartUnicode());
+		assertEquals("domain", a.getDomainPartPunycode());
+		assertEquals("", a.getTldUnicode());
+		assertEquals("", a.getTldPunycode());
+		assertEquals("local@domain", a.toString());
+		assertEquals("local@domain", a.getMailAddressUnicode());
+		assertEquals("local@domain", a.getMailAddressPunycodedDomain());
 
 		a = new EMailAddress("local@domain.tld");
-		assertEquals(a.getLocalPart(), "local");
-		// assertEquals(a.getlocalPartASCII(), "local");
-		assertEquals(a.getDomainPartUnicode(), "domain.tld");
-		assertEquals(a.getDomainPartPunycode(), "domain.tld");
-		assertEquals(a.getTldUnicode(), "tld");
-		assertEquals(a.getTldPunycode(), "tld");
-		assertEquals(a.toString(), "local@domain.tld");
-		assertEquals(a.getMailAddressUnicode(), "local@domain.tld");
-		assertEquals(a.getMailAddressPunycodedDomain(), "local@domain.tld");
+		assertEquals("local", a.getLocalPart());
+		// assertEquals("local", a.getlocalPartASCII());
+		assertEquals("domain.tld", a.getDomainPartUnicode());
+		assertEquals("domain.tld", a.getDomainPartPunycode());
+		assertEquals("tld", a.getTldUnicode());
+		assertEquals("tld", a.getTldPunycode());
+		assertEquals("local@domain.tld", a.toString());
+		assertEquals("local@domain.tld", a.getMailAddressUnicode());
+		assertEquals("local@domain.tld", a.getMailAddressPunycodedDomain());
 		
 		a = new EMailAddress("local@"+ExampleUnicode+".jp");
-		assertEquals(a.getLocalPart(), "local");
-		// assertEquals(a.getlocalPartASCII(), "local");
-		assertEquals(a.getDomainPartUnicode(), ExampleUnicode+".jp");
-		assertEquals(a.getDomainPartPunycode(), ExamplePunycode+".jp");
-		assertEquals(a.getTldUnicode(), "jp");
-		assertEquals(a.getTldPunycode(), "jp");
-		assertEquals(a.getMailAddressUnicode(), "local@"+ExampleUnicode+".jp");
-		assertEquals(a.getMailAddressPunycodedDomain(), "local@"+ExamplePunycode+".jp");
+		assertEquals("local", a.getLocalPart());
+		// assertEquals("local", a.getlocalPartASCII());
+		assertEquals(ExampleUnicode+".jp", a.getDomainPartUnicode());
+		assertEquals(ExamplePunycode+".jp", a.getDomainPartPunycode());
+		assertEquals("jp", a.getTldUnicode());
+		assertEquals("jp", a.getTldPunycode());
+		assertEquals("local@"+ExampleUnicode+".jp", a.getMailAddressUnicode());
+		assertEquals("local@"+ExamplePunycode+".jp", a.getMailAddressPunycodedDomain());
 		EMailAddress.USE_UNICODE_AS_STANDARD = true;
-		assertEquals(a.toString(), "local@"+ExampleUnicode+".jp");
+		assertEquals("local@"+ExampleUnicode+".jp", a.toString());
 		EMailAddress.USE_UNICODE_AS_STANDARD = false;
-		assertEquals(a.toString(), "local@"+ExamplePunycode+".jp");
+		assertEquals("local@"+ExamplePunycode+".jp", a.toString());
 
 		a = new EMailAddress("local@example."+ExampleUnicode);
-		assertEquals(a.getLocalPart(), "local");
-		// assertEquals(a.getlocalPartASCII(), "local");
-		assertEquals(a.getDomainPartUnicode(), "example."+ExampleUnicode);
-		assertEquals(a.getDomainPartPunycode(), "example."+ExamplePunycode);
-		assertEquals(a.getTldUnicode(), ExampleUnicode);
-		assertEquals(a.getTldPunycode(), ExamplePunycode);
-		assertEquals(a.getMailAddressUnicode(), "local@example."+ExampleUnicode);
-		assertEquals(a.getMailAddressPunycodedDomain(), "local@example."+ExamplePunycode);
+		assertEquals("local", a.getLocalPart());
+		// assertEquals("local", a.getlocalPartASCII());
+		assertEquals("example."+ExampleUnicode, a.getDomainPartUnicode());
+		assertEquals("example."+ExamplePunycode, a.getDomainPartPunycode());
+		assertEquals(ExampleUnicode, a.getTldUnicode());
+		assertEquals(ExamplePunycode, a.getTldPunycode());
+		assertEquals("local@example."+ExampleUnicode, a.getMailAddressUnicode());
+		assertEquals("local@example."+ExamplePunycode, a.getMailAddressPunycodedDomain());
 		EMailAddress.USE_UNICODE_AS_STANDARD = true;
-		assertEquals(a.toString(), "local@example."+ExampleUnicode);
+		assertEquals("local@example."+ExampleUnicode, a.toString());
 		EMailAddress.USE_UNICODE_AS_STANDARD = false;
-		assertEquals(a.toString(), "local@example."+ExamplePunycode);
+		assertEquals("local@example."+ExamplePunycode, a.toString());
 	}
 	
 	@Test
@@ -120,7 +133,7 @@ public class EMailAddressTest {
 	}
 	
 	@Test
-	public void testClone() throws InvalidMailAddressException, CloneNotSupportedException {
+	public void testClone() throws CloneNotSupportedException {
 		EMailAddress a = new EMailAddress("local@example."+ExampleUnicode);
 		EMailAddress b = (EMailAddress) a.clone();
 		
@@ -128,21 +141,21 @@ public class EMailAddressTest {
 		assertTrue(a.equals(b));
 		assertTrue(b.equals(a));
 		
-		assertEquals(a.getDomainPartPunycode(), b.getDomainPartPunycode());
-		assertEquals(a.getDomainPartUnicode(), b.getDomainPartUnicode());
-		assertEquals(a.getLocalPart(), b.getLocalPart());
-		assertEquals(a.getMailAddressPunycodedDomain(), b.getMailAddressPunycodedDomain());
-		assertEquals(a.getMailAddressUnicode(), b.getMailAddressUnicode());
-		assertEquals(a.getTldPunycode(), b.getTldPunycode());
-		assertEquals(a.getTldUnicode(), b.getTldUnicode());
+		assertEquals(b.getDomainPartPunycode(), a.getDomainPartPunycode());
+		assertEquals(b.getDomainPartUnicode(), a.getDomainPartUnicode());
+		assertEquals(b.getLocalPart(), a.getLocalPart());
+		assertEquals(b.getMailAddressPunycodedDomain(), a.getMailAddressPunycodedDomain());
+		assertEquals(b.getMailAddressUnicode(), a.getMailAddressUnicode());
+		assertEquals(b.getTldPunycode(), a.getTldPunycode());
+		assertEquals(b.getTldUnicode(), a.getTldUnicode());
 		EMailAddress.USE_UNICODE_AS_STANDARD = true;
-		assertEquals(a.toString(), b.toString());
+		assertEquals(b.toString(), a.toString());
 		EMailAddress.USE_UNICODE_AS_STANDARD = false;
-		assertEquals(a.toString(), b.toString());
+		assertEquals(b.toString(), a.toString());
 	}
 	
 	@Test
-	public void testEquals() throws InvalidMailAddressException {
+	public void testEquals() {
 		EMailAddress a = new EMailAddress("local@example."+ExampleUnicode);
 		EMailAddress b = new EMailAddress("local@example."+ExampleUnicode);
 		

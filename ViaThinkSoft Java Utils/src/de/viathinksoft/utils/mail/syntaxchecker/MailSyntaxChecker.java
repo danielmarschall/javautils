@@ -5,15 +5,17 @@ import java.util.HashSet;
 import java.util.regex.Pattern;
 
 import de.viathinksoft.utils.mail.EMailAddress;
-import de.viathinksoft.utils.mail.InvalidMailAddressException;
 
 /**
+ * This class is not stable. For a good syntax check, please use the classes of
+ * Dominic Sayers or Cal Henderson.
  * 
  * @author Daniel Marschall
+ * @version 0.1
  * 
  */
 public class MailSyntaxChecker {
-	
+
 	private static final String REGEX_IP = "\\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\b";
 
 	// Führt eine Prüfung der E-Mail-Adresse gemäß SMTP-Spezifikation RFC 5321
@@ -97,15 +99,14 @@ public class MailSyntaxChecker {
 	private static boolean preg_match(String regex, String data) {
 		return Pattern.compile(regex).matcher(data).matches();
 	}
-	
+
 	private static boolean checkDns(String domainOrIP) {
 		// TODO
-		
+
 		return true;
 	}
 
-	public static boolean isMailValid(String email)
-			throws InvalidMailAddressException {
+	public static boolean isMailValid(String email) {
 		return isMailValid(new EMailAddress(email));
 	}
 
@@ -135,40 +136,40 @@ public class MailSyntaxChecker {
 		}
 
 		// localPart darf keine Punkte am Anfang oder Ende besitzen
-		if (localPart.length() == 0) return false;
-		String lpFirstChar = localPart.substring(0, 1);
-		String lpLastChar = localPart.substring(localPart.length()-1);
-		if (lpFirstChar.equals(".") || (lpLastChar.equals("."))) {
+		
+		if (localPart.length() == 0) {
+			return false;
+		}
+		if (localPart.startsWith(".") || localPart.endsWith(".")) {
 			return false;
 		}
 
 		// domainPart darf keine Punkte am Anfang oder Ende besitzen
 
-		String dpFirstChar = domainPart.substring(0, 1);
-		String dpLastChar = domainPart.substring(domainPart.length()-1);
-
-		if (dpFirstChar.equals(".") || (dpLastChar.equals("."))) {
+		if (domainPart.startsWith(".") || domainPart.endsWith(".")) {
 			return false;
 		}
 
 		// domainPart prüfen
-		
-		if (preg_match("^"+REGEX_IP+"$", domainPart)) {
+
+		if (preg_match("^" + REGEX_IP + "$", domainPart)) {
 			// domainPart is <IP>
 			// QUE: Ist das überhaupt gemäß RFC gültig?
-			
+
 			String ip = ""; // TODO
-			
+
 			if (CHECK_DNS) {
-				if (!checkDns(ip)) return false;
+				if (!checkDns(ip))
+					return false;
 			}
-		} else if (preg_match("^\\["+REGEX_IP+"\\]$", domainPart)) {
+		} else if (preg_match("^\\[" + REGEX_IP + "\\]$", domainPart)) {
 			// domainPart is [<IP>]
-			
+
 			String ip = ""; // TODO
-			
+
 			if (CHECK_DNS) {
-				if (!checkDns(ip)) return false;
+				if (!checkDns(ip))
+					return false;
 			}
 		} else {
 			if (!preg_match("^[A-Za-z0-9\\-\\.]+$", domainPart)) {
@@ -179,26 +180,27 @@ public class MailSyntaxChecker {
 				if (!checkTldRecognized(email))
 					return false;
 			}
-			
+
 			if (CHECK_DNS) {
-				if (!checkDns(domainPart)) return false;
+				if (!checkDns(domainPart))
+					return false;
 			}
 		}
-		
+
 		// localPart prüfen
-		
+
 		if (!preg_match("^(\\\\.|[A-Za-z0-9!#%&`_=\\/$\'*+?^{}|~.-])+$",
-				localPart.replaceAll("\\\\", "").replaceAll("@", "") )) {
+				localPart.replaceAll("\\\\", "").replaceAll("@", ""))) {
 			// character not valid in local part unless
 			// local part is quoted
-			if (!preg_match("^\"(\\\\\"|[^\"])+\"$",
-					  localPart.replaceAll("\\\\", "").replaceAll("@", "") )) {
+			if (!preg_match("^\"(\\\\\"|[^\"])+\"$", localPart.replaceAll(
+					"\\\\", "").replaceAll("@", ""))) {
 				return false;
 			}
 		}
-		
+
 		// TODO: Weitere Tests gemäß RFC?
-		
+
 		return true;
 	}
 

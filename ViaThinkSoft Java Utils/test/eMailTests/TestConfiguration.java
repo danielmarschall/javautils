@@ -1,4 +1,4 @@
-package de.viathinksoft.utils.mail.sender;
+package eMailTests;
 
 // Statische Klasse, die unsere Konfiguration für Tests verwaltet.
 // Ginge auch als Singleton

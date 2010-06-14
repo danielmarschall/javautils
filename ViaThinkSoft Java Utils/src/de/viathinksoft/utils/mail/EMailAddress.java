@@ -2,8 +2,6 @@ package de.viathinksoft.utils.mail;
 
 import java.net.IDN;
 
-import de.viathinksoft.utils.mail.syntaxchecker.MailSyntaxChecker;
-
 /**
  * 
  * This class parses an email address (trims whitespaces from it) and stores it
@@ -25,7 +23,7 @@ public class EMailAddress {
 	 * returned.
 	 */
 	static boolean USE_UNICODE_AS_STANDARD = false;
-	
+
 	// Attributes
 
 	/**
@@ -122,29 +120,24 @@ public class EMailAddress {
 	 *            bare computer email address. e.g. roedyg@mindprod.com No
 	 *            "Roedy Green" <roedyg@mindprod.com> style addresses. No local
 	 *            addresses, e.g. roedy.
-	 * @throws InvalidMailAddressException
 	 */
-	public EMailAddress(String eMailAddress) throws InvalidMailAddressException {
+	public EMailAddress(String eMailAddress) {
 		super();
 
-		if (eMailAddress == null) {
-			throw new InvalidMailAddressException();
+		// Zuerst trimmen (z.B. für Formulardaten)
+		eMailAddress = eMailAddress.trim();
+
+		// Wir splitten dann beim At-Zeichen (@)
+		String localPart = "";
+		String domainPart = "";
+		int atIndex = eMailAddress.lastIndexOf('@');
+		if (atIndex == -1) {
+			localPart = eMailAddress;
+			domainPart = "";
+		} else {
+			localPart = eMailAddress.substring(0, atIndex);
+			domainPart = eMailAddress.substring(atIndex + 1);
 		}
-
-		// Zuerst trimmen (z.B. für Formulardaten) Wir splitten dann beim
-		// At-Zeichen (@) und berücksichtigen ein escaped-At
-		// (\@)
-		String[] res = eMailAddress.trim().split("(?<!\\\\)@");
-
-		// @-sign was not used once
-		if (res.length != 2) {
-			throw new InvalidMailAddressException();
-		}
-
-		// Temporary we store the values here.
-
-		String localPart = res[0];
-		String domainPart = res[1];
 
 		// We parse the local part.
 
@@ -191,13 +184,17 @@ public class EMailAddress {
 	// Methods
 
 	/**
-	 * Returns the email address with punycoded domain name and TLD. You should use
-	 * this method to send emails.
+	 * Returns the email address with punycoded domain name and TLD. You should
+	 * use this method to send emails.
 	 * 
 	 * @return The email address with punycoded domain name and TLD.
 	 */
 	public String getMailAddressPunycodedDomain() {
-		return this.localPart + "@" + this.domainPartPunycode;
+		if (this.domainPartPunycode.equals("")) {
+			return this.localPart;
+		} else {
+			return this.localPart + "@" + this.domainPartPunycode;
+		}
 	}
 
 	/**
@@ -206,7 +203,11 @@ public class EMailAddress {
 	 * @return The email address with internationalized domain name and TLD.
 	 */
 	public String getMailAddressUnicode() {
-		return this.localPart + "@" + this.domainPartUnicode;
+		if (this.domainPartUnicode.equals("")) {
+			return this.localPart;
+		} else {
+			return this.localPart + "@" + this.domainPartUnicode;
+		}
 	}
 
 	/**
@@ -279,25 +280,7 @@ public class EMailAddress {
 	 */
 	@Override
 	protected EMailAddress clone() throws CloneNotSupportedException {
-		try {
-			return new EMailAddress(this.toString());
-		} catch (InvalidMailAddressException e) {
-			return null;
-		}
-	}
-
-	/**
-	 * Asks the mail syntax checker if the current mail address is valid or not.
-	 * Warning! This check is NOT performed automatically. There is no guarantee
-	 * that the syntax check is 100% correct. There might be mail address which
-	 * are valid but marked as invalid (because server disobeyed RFC rules etc)
-	 * and mail addresses which are invalid but marked valid (e.g. simply if
-	 * they were not assigned).
-	 * 
-	 * @return Boolean which represents if the mail address is valid or not.
-	 */
-	public boolean isSyntaxValid() {
-		return MailSyntaxChecker.isMailValid(this);
+		return new EMailAddress(this.toString());
 	}
 
 	// ---------- STATIC FUNCTIONS ----------
@@ -310,8 +293,9 @@ public class EMailAddress {
 	 * @return Boolean which shows if the string is not yet punicoded.
 	 */
 	protected static boolean isUnicode(String str) {
-		if (str == null)
+		if (str == null) {
 			return false;
+		}
 		return (!IDN.toASCII(str).equals(str));
 	}
 
@@ -323,8 +307,9 @@ public class EMailAddress {
 	 * @return Boolean which shows if the string is punycoded or not.
 	 */
 	protected static boolean isPunycode(String str) {
-		if (str == null)
+		if (str == null) {
 			return false;
+		}
 		return (!IDN.toUnicode(str).equals(str));
 	}
 }
