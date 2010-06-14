@@ -190,7 +190,7 @@ public class EMailAddress {
 	 * @return The email address with punycoded domain name and TLD.
 	 */
 	public String getMailAddressPunycodedDomain() {
-		if (this.domainPartPunycode.equals("")) {
+		if (this.domainPartPunycode.isEmpty()) {
 			return this.localPart;
 		} else {
 			return this.localPart + "@" + this.domainPartPunycode;
@@ -203,7 +203,7 @@ public class EMailAddress {
 	 * @return The email address with internationalized domain name and TLD.
 	 */
 	public String getMailAddressUnicode() {
-		if (this.domainPartUnicode.equals("")) {
+		if (this.domainPartUnicode.isEmpty()) {
 			return this.localPart;
 		} else {
 			return this.localPart + "@" + this.domainPartUnicode;

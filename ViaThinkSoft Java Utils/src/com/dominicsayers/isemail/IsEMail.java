@@ -320,7 +320,7 @@ public class IsEMail {
 				// end of the
 				// local part, or two periods together. Either way it's not
 				// allowed.
-				if (element.equals("")) {
+				if (element.isEmpty()) {
 					// Dots in wrong place
 					return EMailSyntaxDiagnosis.ISEMAIL_EMPTYELEMENT;
 				}
@@ -443,7 +443,7 @@ public class IsEMail {
 			// Check for unmatched characters
 			if (matchesIP6.length > 1) {
 				for (String s : matchesIP6[1]) {
-					if ((s != null) && (!s.equals(""))) {
+					if ((s != null) && (!s.isEmpty())) {
 						return EMailSyntaxDiagnosis.ISEMAIL_IPV6BADCHAR;
 					}
 				}
