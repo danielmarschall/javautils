@@ -1,4 +1,8 @@
 <?php
+
+// This file was edited by Daniel Marschall
+// - Fixes: 4 typos
+
 /**
  * @package	isemail
  * @author	Dominic Sayers <dominic_sayers@hotmail.com>
@@ -180,7 +184,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	// 	(http://tools.ietf.org/html/rfc5322#section-3.4.1)
 	//
 	// Problem: need to distinguish between "first.last" and "first"."last"
-	// (i.e. one element or two). And I suck at regexes.
+	// (i.e. one element or two). And I suck at regular expressions.
 	$dotArray	= /*. (array[int]string) .*/ preg_split('/\\.(?=(?:[^\\"]*\\"[^\\"]*\\")*(?![^\\"]*\\"))/m', $localPart);
 	$partLength	= 0;
 
@@ -190,7 +194,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		$elementLength	= strlen($element);
 
 		if ($elementLength === 0)								return $diagnose ? ISEMAIL_ZEROLENGTHELEMENT	: false;	// Can't have empty element (consecutive dots or dots at the start or end)
-// revision 1.15: Speed up the test and get rid of "unitialized string offset" notices from PHP
+// revision 1.15: Speed up the test and get rid of "uninitialized string offset" notices from PHP
 
 		// We need to remove any valid comments (i.e. those at the start or end of the element)
 		if ($element[0] === '(') {
@@ -229,7 +233,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			//
 			// Remove any FWS
 			$element = preg_replace("/(?<!\\\\)$FWS/", '', $element);
-			// My regex skillz aren't up to distinguishing between \" \\" \\\" \\\\" etc.
+			// My regular expressions skills aren't up to distinguishing between \" \\" \\\" \\\\" etc.
 			// So remove all \\ from the string first...
 			$element = preg_replace('/\\\\\\\\/', ' ', $element);
 			if (preg_match('/(?<!\\\\|^)["\\r\\n\\x00](?!$)|\\\\"$|""/', $element) > 0)	return $diagnose ? ISEMAIL_UNESCAPEDDELIM	: false;	// ", CR, LF and NUL must be escaped, "" is too short
@@ -350,7 +354,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			// A zero-length element implies a period at the beginning or end of the
 			// local part, or two periods together. Either way it's not allowed.
 			if ($elementLength === 0)				return $diagnose ? ISEMAIL_DOMAINEMPTYELEMENT	: false;	// Dots in wrong place
-// revision 1.15: Speed up the test and get rid of "unitialized string offset" notices from PHP
+// revision 1.15: Speed up the test and get rid of "uninitialized string offset" notices from PHP
 	
 			// Then we need to remove all valid comments (i.e. those at the start or end of the element
 			if ($element[0] === '(') {
