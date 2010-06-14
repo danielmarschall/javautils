@@ -229,7 +229,7 @@ public class IsEMail {
 		// (http://tools.ietf.org/html/rfc5322#section-3.4.1)
 		//
 		// Problem: need to distinguish between "first.last" and "first"."last"
-		// (i.e. one element or two). And I suck at regexes.
+		// (i.e. one element or two). And I suck at regular expressions.
 
 		String[] dotArray = PHPFunctions.preg_split(
 				"(?m)\\.(?=(?:[^\\\"]*\\\"[^\\\"]*\\\")*(?![^\\\"]*\\\"))",
@@ -248,7 +248,7 @@ public class IsEMail {
 				return EMailSyntaxDiagnosis.ISEMAIL_ZEROLENGTHELEMENT;
 			}
 			// revision 1.15: Speed up the test and get rid of
-			// "unitialized string offset" notices from PHP
+			// "uninitialized string offset" notices from PHP
 
 			// We need to remove any valid comments (i.e. those at the start or
 			// end of the element)
@@ -299,8 +299,8 @@ public class IsEMail {
 				// Remove any FWS
 				element = PHPFunctions.preg_replace("(?<!\\\\)" + FWS, "",
 						element);
-				// My regex skillz aren't up to distinguishing between \" \\"
-				// \\\" \\\\" etc.
+				// My regular expression skills aren't up to distinguishing
+				// between \" \\" \\\" \\\\" etc.
 				// So remove all \\ from the string first...
 				element = PHPFunctions.preg_replace("\\\\\\\\", " ", element);
 				if (PHPFunctions
@@ -518,7 +518,7 @@ public class IsEMail {
 					return EMailSyntaxDiagnosis.ISEMAIL_DOMAINEMPTYELEMENT;
 				}
 				// revision 1.15: Speed up the test and get rid of
-				// "unitialized string offset" notices from PHP
+				// "uninitialized string offset" notices from PHP
 
 				// Then we need to remove all valid comments (i.e. those at the
 				// start or end of the element
