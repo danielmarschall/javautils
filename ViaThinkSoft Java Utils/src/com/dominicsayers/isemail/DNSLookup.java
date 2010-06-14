@@ -4,9 +4,13 @@ import java.util.Hashtable;
 import javax.naming.*;
 import javax.naming.directory.*;
 
-// Source: http://www.rgagnon.com/javadetails/java-0452.html
-// Modified
-
+/**
+ * This class performs DNS lookups.
+ * 
+ * @author Rgagnon.com and Daniel Marschall
+ * @see Source: http://www.rgagnon.com/javadetails/java-0452.html (Modified)
+ * @version 2010-06-14
+ */
 public class DNSLookup {
 	public static int doLookup(String hostName, DNSType type)
 			throws NamingException {

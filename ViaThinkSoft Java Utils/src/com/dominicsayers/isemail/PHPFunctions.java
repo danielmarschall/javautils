@@ -10,6 +10,8 @@ import java.util.regex.Pattern;
  * functionality is only as much as needed by my initial purpose. Special cases
  * are usually not implemented. Please also note that you have to use the JAVA
  * REGULAR EXPRESSION syntax! PHP's PCRE IS NOT INTERPRETED OR CONVERTED!
+ * @author Daniel Marschall
+ * @version 2010-06-14
  */
 
 public class PHPFunctions {

@@ -3,12 +3,14 @@ package com.dominicsayers.isemail;
 import javax.naming.NamingException;
 
 /**
+ * This class checks if email addresses are valid or not.
+ * 
  * @package isemail
  * @author Dominic Sayers <dominic_sayers@hotmail.com>; Translated from PHP into
  *         Java by Daniel Marschall [www.daniel-marschall.de]
- * @copyright 2010 Dominic Sayers
+ * @copyright 2010 Dominic Sayers; Java-Translation 2010 by Daniel Marschall
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @link http://www.dominicsayers.com/isemail
+ * @see http://www.dominicsayers.com/isemail
  * @version 1.17 - Upper length limit corrected to 254 characters;
  *          Java-Translation 2010-06-13
  */
@@ -617,6 +619,7 @@ public class IsEMail {
 						return EMailSyntaxDiagnosis.ISEMAIL_DOMAINNOTFOUND;
 					}
 				} catch (NamingException e) {
+					// Resp.: Internal error
 					return EMailSyntaxDiagnosis.ISEMAIL_DOMAINNOTFOUND;
 				}
 			}
@@ -637,7 +640,7 @@ public class IsEMail {
 	 * @param c
 	 *            The new char
 	 * @return The new String
-	 * @see http://www.rgagnon.com/javadetails/java-0030.html
+	 * @see Source: http://www.rgagnon.com/javadetails/java-0030.html
 	 */
 	public static String replaceCharAt(String s, int pos, char c) {
 		return s.substring(0, pos) + c + s.substring(pos + 1);
