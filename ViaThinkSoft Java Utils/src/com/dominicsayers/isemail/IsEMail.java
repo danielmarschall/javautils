@@ -12,7 +12,7 @@ import javax.naming.NamingException;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @see http://www.dominicsayers.com/isemail
  * @version 1.17 - Upper length limit corrected to 254 characters;
- *          Java-Translation 2010-06-13
+ *          Java-Translation 2010-06-14
  */
 
 /*
