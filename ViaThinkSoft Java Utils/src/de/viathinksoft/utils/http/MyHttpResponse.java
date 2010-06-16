@@ -2,6 +2,7 @@ package de.viathinksoft.utils.http;
 
 import java.io.IOException;
 
+import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.ParseException;
@@ -37,5 +38,11 @@ public class MyHttpResponse {
 
 	public int getStatusCode() {
 		return statusCode;
+	}
+	
+	public String getHeader(String name) {
+		Header[] h = response.getHeaders(name);
+		if (h.length != 1) return null;
+		return h[0].getValue();
 	}
 }
