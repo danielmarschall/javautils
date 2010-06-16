@@ -1,4 +1,4 @@
-package de.viathinksoft.utils.mail;
+package de.viathinksoft.utils.mail.address;
 
 /**
  * This class contains a function which "preproceses an email address. Following

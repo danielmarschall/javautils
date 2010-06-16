@@ -1,4 +1,4 @@
-package de.viathinksoft.utils.mail;
+package de.viathinksoft.utils.mail.address;
 
 import java.net.IDN;
 

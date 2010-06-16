@@ -1,10 +1,12 @@
-package de.viathinksoft.utils.mail;
+package de.viathinksoft.utils.mail.address;
 
 import static org.junit.Assert.*;
 
 import java.net.IDN;
 
 import org.junit.Test;
+
+import de.viathinksoft.utils.mail.address.EMailAddress;
 
 public class EMailAddressTest {
 	

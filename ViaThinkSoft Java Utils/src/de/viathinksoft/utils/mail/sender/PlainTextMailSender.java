@@ -2,7 +2,7 @@ package de.viathinksoft.utils.mail.sender;
 
 import javax.mail.MessagingException;
 
-import de.viathinksoft.utils.mail.EMailAddress;
+import de.viathinksoft.utils.mail.address.EMailAddress;
 
 public class PlainTextMailSender extends RawMailSender {
 	

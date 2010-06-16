@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.regex.Pattern;
 
-import de.viathinksoft.utils.mail.EMailAddress;
+import de.viathinksoft.utils.mail.address.EMailAddress;
 
 /**
  * This class is not stable. For a good syntax check, please use the classes of

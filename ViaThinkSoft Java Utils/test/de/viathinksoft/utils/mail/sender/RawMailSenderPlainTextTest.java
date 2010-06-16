@@ -10,7 +10,7 @@ import javax.mail.internet.AddressException;
 
 import org.junit.Test;
 
-import de.viathinksoft.utils.mail.EMailAddress;
+import de.viathinksoft.utils.mail.address.EMailAddress;
 import de.viathinksoft.utils.mail.sender.PlainTextMailSender;
 import eMailTests.TestConfiguration;
 
