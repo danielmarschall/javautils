@@ -312,4 +312,20 @@ public class EMailAddress {
 		}
 		return (!IDN.toUnicode(str).equals(str));
 	}
+
+	/**
+	 * This function "preproceses" an email address. Therefore following steps
+	 * will be performed: 1. The email address will be trimmed (in case of user
+	 * inputs) 2. E-Mail-Addresses with internationalized domain names will be
+	 * converted into ASCII compatible punycode (the local part will be left as
+	 * it is!)
+	 * 
+	 * @author Daniel Marschall
+	 * 
+	 */
+	public static String preprocess(String eMailAddress) {
+		EMailAddress email = new EMailAddress(eMailAddress);
+
+		return email.getMailAddressPunycodedDomain();
+	}
 }

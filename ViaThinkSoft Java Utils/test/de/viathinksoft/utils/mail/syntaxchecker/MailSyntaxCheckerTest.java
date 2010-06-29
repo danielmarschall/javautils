@@ -18,6 +18,7 @@ import org.xml.sax.SAXException;
 
 import de.viathinksoft.utils.mail.address.EMailAddress;
 
+@Deprecated
 public class MailSyntaxCheckerTest {
 	
 	static int errorCount;

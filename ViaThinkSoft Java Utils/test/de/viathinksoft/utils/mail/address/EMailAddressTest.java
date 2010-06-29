@@ -9,10 +9,11 @@ import org.junit.Test;
 import de.viathinksoft.utils.mail.address.EMailAddress;
 
 public class EMailAddressTest {
-	
-	private static final String ExamplePunycode = "xn--zckzah"; // Japanese IDN Test TLD
+
+	// Japanese IDN Test TLD
+	private static final String ExamplePunycode = "xn--zckzah";
 	private static final String ExampleUnicode = IDN.toUnicode(ExamplePunycode);
-	
+
 	@Test
 	public void testAddressParsing() {
 		try {
@@ -20,9 +21,9 @@ public class EMailAddressTest {
 			fail();
 		} catch (NullPointerException e) {
 		}
-		
+
 		EMailAddress a;
-		
+
 		a = new EMailAddress("");
 		assertEquals("", a.getLocalPart());
 		// assertEquals("", a.getLocalPartASCII());
@@ -44,7 +45,7 @@ public class EMailAddressTest {
 		assertEquals("bla", a.toString());
 		assertEquals("bla", a.getMailAddressUnicode());
 		assertEquals("bla", a.getMailAddressPunycodedDomain());
-		
+
 		a = new EMailAddress(ExampleUnicode);
 		assertEquals(ExampleUnicode, a.getLocalPart());
 		// assertEquals("", a.getLocalPartASCII());
@@ -88,36 +89,40 @@ public class EMailAddressTest {
 		assertEquals("local@domain.tld", a.toString());
 		assertEquals("local@domain.tld", a.getMailAddressUnicode());
 		assertEquals("local@domain.tld", a.getMailAddressPunycodedDomain());
-		
-		a = new EMailAddress("local@"+ExampleUnicode+".jp");
+
+		a = new EMailAddress("local@" + ExampleUnicode + ".jp");
 		assertEquals("local", a.getLocalPart());
 		// assertEquals("local", a.getlocalPartASCII());
-		assertEquals(ExampleUnicode+".jp", a.getDomainPartUnicode());
-		assertEquals(ExamplePunycode+".jp", a.getDomainPartPunycode());
+		assertEquals(ExampleUnicode + ".jp", a.getDomainPartUnicode());
+		assertEquals(ExamplePunycode + ".jp", a.getDomainPartPunycode());
 		assertEquals("jp", a.getTldUnicode());
 		assertEquals("jp", a.getTldPunycode());
-		assertEquals("local@"+ExampleUnicode+".jp", a.getMailAddressUnicode());
-		assertEquals("local@"+ExamplePunycode+".jp", a.getMailAddressPunycodedDomain());
+		assertEquals("local@" + ExampleUnicode + ".jp", a
+				.getMailAddressUnicode());
+		assertEquals("local@" + ExamplePunycode + ".jp", a
+				.getMailAddressPunycodedDomain());
 		EMailAddress.USE_UNICODE_AS_STANDARD = true;
-		assertEquals("local@"+ExampleUnicode+".jp", a.toString());
+		assertEquals("local@" + ExampleUnicode + ".jp", a.toString());
 		EMailAddress.USE_UNICODE_AS_STANDARD = false;
-		assertEquals("local@"+ExamplePunycode+".jp", a.toString());
+		assertEquals("local@" + ExamplePunycode + ".jp", a.toString());
 
-		a = new EMailAddress("local@example."+ExampleUnicode);
+		a = new EMailAddress("local@example." + ExampleUnicode);
 		assertEquals("local", a.getLocalPart());
 		// assertEquals("local", a.getlocalPartASCII());
-		assertEquals("example."+ExampleUnicode, a.getDomainPartUnicode());
-		assertEquals("example."+ExamplePunycode, a.getDomainPartPunycode());
+		assertEquals("example." + ExampleUnicode, a.getDomainPartUnicode());
+		assertEquals("example." + ExamplePunycode, a.getDomainPartPunycode());
 		assertEquals(ExampleUnicode, a.getTldUnicode());
 		assertEquals(ExamplePunycode, a.getTldPunycode());
-		assertEquals("local@example."+ExampleUnicode, a.getMailAddressUnicode());
-		assertEquals("local@example."+ExamplePunycode, a.getMailAddressPunycodedDomain());
+		assertEquals("local@example." + ExampleUnicode, a
+				.getMailAddressUnicode());
+		assertEquals("local@example." + ExamplePunycode, a
+				.getMailAddressPunycodedDomain());
 		EMailAddress.USE_UNICODE_AS_STANDARD = true;
-		assertEquals("local@example."+ExampleUnicode, a.toString());
+		assertEquals("local@example." + ExampleUnicode, a.toString());
 		EMailAddress.USE_UNICODE_AS_STANDARD = false;
-		assertEquals("local@example."+ExamplePunycode, a.toString());
+		assertEquals("local@example." + ExamplePunycode, a.toString());
 	}
-	
+
 	@Test
 	public void testIsUnicode() {
 		assertFalse(EMailAddress.isUnicode(null));
@@ -125,7 +130,7 @@ public class EMailAddressTest {
 		assertFalse(EMailAddress.isUnicode(ExamplePunycode));
 		assertTrue(EMailAddress.isUnicode(ExampleUnicode));
 	}
-	
+
 	@Test
 	public void testIsPunycode() {
 		assertFalse(EMailAddress.isPunycode(null));
@@ -133,20 +138,21 @@ public class EMailAddressTest {
 		assertTrue(EMailAddress.isPunycode(ExamplePunycode));
 		assertFalse(EMailAddress.isPunycode(ExampleUnicode));
 	}
-	
+
 	@Test
 	public void testClone() throws CloneNotSupportedException {
-		EMailAddress a = new EMailAddress("local@example."+ExampleUnicode);
+		EMailAddress a = new EMailAddress("local@example." + ExampleUnicode);
 		EMailAddress b = (EMailAddress) a.clone();
-		
+
 		assertFalse(a == b);
 		assertTrue(a.equals(b));
 		assertTrue(b.equals(a));
-		
+
 		assertEquals(b.getDomainPartPunycode(), a.getDomainPartPunycode());
 		assertEquals(b.getDomainPartUnicode(), a.getDomainPartUnicode());
 		assertEquals(b.getLocalPart(), a.getLocalPart());
-		assertEquals(b.getMailAddressPunycodedDomain(), a.getMailAddressPunycodedDomain());
+		assertEquals(b.getMailAddressPunycodedDomain(), a
+				.getMailAddressPunycodedDomain());
 		assertEquals(b.getMailAddressUnicode(), a.getMailAddressUnicode());
 		assertEquals(b.getTldPunycode(), a.getTldPunycode());
 		assertEquals(b.getTldUnicode(), a.getTldUnicode());
@@ -155,14 +161,31 @@ public class EMailAddressTest {
 		EMailAddress.USE_UNICODE_AS_STANDARD = false;
 		assertEquals(b.toString(), a.toString());
 	}
-	
+
 	@Test
 	public void testEquals() {
-		EMailAddress a = new EMailAddress("local@example."+ExampleUnicode);
-		EMailAddress b = new EMailAddress("local@example."+ExampleUnicode);
-		
+		EMailAddress a = new EMailAddress("local@example." + ExampleUnicode);
+		EMailAddress b = new EMailAddress("local@example." + ExampleUnicode);
+
 		assertFalse(a == b);
 		assertTrue(a.equals(b));
 		assertTrue(b.equals(a));
+	}
+
+	@Test
+	public void preprocessTrimTest() {
+		// Check that trim() works
+		assertEquals(
+				"test@test.de",
+				EMailAddress
+						.preprocess("  \t \n\t\n\r test@test.de    \t  \n\r\n \r       "));
+	}
+
+	@Test
+	public void preprocessIDNTest() {
+		// Check that IDN addresses are decoded
+		assertEquals("test@" + ExamplePunycode + "." + ExamplePunycode,
+				EMailAddress.preprocess("  \t \n\t\n\r test@" + ExampleUnicode
+						+ "." + ExampleUnicode + "    \t  \n\r\n \r       "));
 	}
 }

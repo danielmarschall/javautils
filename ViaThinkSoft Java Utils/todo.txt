@@ -1,2 +1,3 @@
 Mail Tests: Um Codeduplizierung zu vermeiden, eine Art Interface erstellen...
 Testabdeckung verbessern.
+RawMailSender mit JNDI erweitern
