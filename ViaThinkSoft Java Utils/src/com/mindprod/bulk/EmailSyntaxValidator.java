@@ -22,9 +22,8 @@ package com.mindprod.bulk;
 // SVN:
 // http://wush.net/svn/mindprod/com/mindprod/bulk/EmailSyntaxValidator.java
 
-// TODO: E-Mail-Aufbereiter... Puny, Trim
 // TODO: BAD TLDS + PSEUDO (TOR: EXIT ETC)
-// TODO: Awaiting bulk comit
+// TODO: Awaiting official commit for this Patch
 
 // CHANGELOG BY DANIEL MARSCHALL
 //
